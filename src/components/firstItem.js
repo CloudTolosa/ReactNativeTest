@@ -22,7 +22,7 @@ const FirstItem = ({item}) =>  {
             </View>
             <View style={styles.row}>
                 <Image
-                    style={{ width: 50, height: 50, borderRadius: 37.5 }}
+                    style={{ width: 60, height: 60, borderRadius: 37.5 }}
                     source={{uri: 'https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png'}}
                 />
             </View>
