@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import FirstScreen from './firstScreen';
 import FirstDetail from './firstDetailScreen';
-import Colors from '../res/colors';
+import Colors from '../../res/colors';
 
 const Stack = createStackNavigator();
 

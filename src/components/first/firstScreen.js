@@ -1,39 +1,63 @@
 import React, { Component } from "react";
-import { View, ActivityIndicator, FlatList, StyleSheet } from "react-native";
-import Http from "../libs/http";
-import Colors from '../res/colors';
+import { View, ActivityIndicator, FlatList, StyleSheet, AppRegistry } from "react-native";
+import Http from "../../libs/http";
+import Colors from '../../res/colors';
 
 import FirstItem from "./firstItem";
+import Search from '../Search';
 
 class firstScreen extends Component {
   state = {
-    api: [],
+    apis: [],
+    allApis: [],
     loading: false,
   };
 
   componentDidMount = async () => {
+
+    this.getData();
+
+  };
+
+  getData = async () => {
     this.setState({ loading: true });
+
     const res = await Http.instance.get(
       "http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=spain&api_key=829751643419a7128b7ada50de590067&format=json"
     );
-    this.setState({ api: res.topartists.artist, loading: false });
+
+    this.setState({ apis: res.topartists.artist, allApis: res.topartists.artist, loading: false });
+  }
+
+  handlePress = (api) => {
+    
+    this.props.navigation.navigate("FirstDetail"); 
+
   };
 
-  handlePress = () => {
-    console.log("Navigate");
-    this.props.navigation.navigate("FirstDetail");
-  };
+  handleSearch = (query) => {
+    const { allApis } = this.state;
+
+    const apiFiltered = allApis.filter((api) => {
+      return api.name.toLowerCase().includes(query.toLowerCase());
+    });
+
+    this.setState({ apis: apiFiltered });
+  }
 
   render() {
-    const { api, loading } = this.state;
+
+    const { apis, loading } = this.state;
 
     return (
       <View style={styles.container}>
+        <Search onChange={this.handleSearch} placeholder={'Search Artist'}/>
+
         {loading ? (
           <ActivityIndicator color="##fff" style={styles.loader} size="large" />
         ) : null}
         <FlatList
-          data={api}
+          data={apis}
           renderItem={({ item }) => <FirstItem item={item} />}
           keyExtractor={(item) => item.mbid}
         />
