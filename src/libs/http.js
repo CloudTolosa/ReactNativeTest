@@ -1,9 +1,10 @@
 
 class Http {
+
     static instance = new Http();
 
 
-    get = async () => {
+    get = async (url) => {
         try {
             let req = await fetch(url);
             let json = await req.json();
@@ -23,7 +24,7 @@ class Http {
     post = async (url, body) => {
         try {
             let req = await fetch(url, 
-                {method: "POST", 
+                { method: "POST", 
                     body
                 });
 
@@ -37,3 +38,4 @@ class Http {
         }
     }
 }
+export default Http;
