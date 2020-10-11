@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight, Linking } from 'react-native';
 import Colors from '../res/colors';
+import { Ionicons } from '@expo/vector-icons'; 
 
 
 const FirstItem = ({item}) =>  {
@@ -10,7 +11,14 @@ const FirstItem = ({item}) =>  {
         <View style={styles.container}>
             <View >
                 <Text style={styles.symbolText}>{item.name}</Text>
-                <Text style={styles.nameText}>{'Listeneres: '+ item.listeners}</Text>
+                <Text style={styles.nameText}>{'Listeners: '+ item.listeners}</Text>
+                <View style={styles.row}>
+                    <Ionicons name="ios-link" size={14} color="white" />
+                    <TouchableHighlight onPress={() => Linking.openURL(item.url)}>
+                        <Text style={styles.url}>{' Fanpage '+item.name}</Text>
+                    </TouchableHighlight>
+                </View>
+                
             </View>
             <View style={styles.row}>
                 <Image
@@ -34,15 +42,21 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     symbolText: {
-        color: "#fff",
+        color: "#e94560",
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: 18,
         marginRight: 12
     },
     nameText: {
         color: "#fff",
         fontSize:14
-    }
+    },
+    url: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 14,
+        marginRight: 12
+    },
    
   });
 
