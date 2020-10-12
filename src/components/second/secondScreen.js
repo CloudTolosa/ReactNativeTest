@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, ActivityIndicator, FlatList, StyleSheet, AppRegistry } from "react-native";
+import { View, ActivityIndicator, FlatList, StyleSheet } from "react-native";
+
 import Http from "../../libs/http";
 import Colors from '../../res/colors';
 
@@ -11,10 +12,11 @@ class SecondScreen extends Component {
     apis: [],
     allApis: [],
     loading: false,
+    page: 0,
+    isConnected: false
   };
 
   componentDidMount = async () => {
-
     this.getData();
 
   };
@@ -31,7 +33,7 @@ class SecondScreen extends Component {
 
   handlePress = (api) => {
     
-    this.props.navigation.navigate("FirstDetail"); 
+    this.props.navigation.navigate("SecondDetail",api); 
 
   };
 
@@ -55,13 +57,15 @@ class SecondScreen extends Component {
         <Search onChange={this.handleSearch} placeholder={'Search album , artist and Song'}/>
 
         {loading ? (
-          <ActivityIndicator color="##fff" style={styles.loader} size="large" />
+          <ActivityIndicator color="#fff" style={styles.loader} size="large" />
         ) : null}
-        <FlatList
-          data={apis}
-          renderItem={({ item }) => <SecondItem item={item} />}
-          keyExtractor={(item, index) => index + item.mbid}
-        />
+            <FlatList
+              data={apis}
+              initialNumToRender = {10}
+              renderItem={({ item }) => <SecondItem item={item} />}
+              keyExtractor={(item, index) => index + item.mbid}
+            />
+        
       </View>
     );
   }
@@ -75,6 +79,13 @@ const styles = StyleSheet.create({
   loader: {
     marginTop: 60,
   },
+  disabled: {
+    justifyContent: 'center',
+    color: '#fff',
+    fontSize: 26,
+    fontWeight: 'bold'
+
+  }
 });
 
 export default SecondScreen;
